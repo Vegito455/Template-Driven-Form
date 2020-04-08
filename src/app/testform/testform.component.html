@@ -1,0 +1,140 @@
+ <div class="container-fluid  row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <h1>Template Form</h1>
+        {{testForm.value | json}}
+        <hr/>
+       
+        <form #testForm="ngForm" (ngSubmit)="onSubmit()" novalidate >
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" 
+                class="form-control" 
+                [class.is-invalid]="name.invalid && name.touched"
+                #name="ngModel" 
+                name="userName" 
+                [(ngModel)]="userModel.name" 
+                required    >
+               
+
+                <small class="text-danger" 
+                [class.d-none]="name.valid || name.untouched">
+                Name is Required
+            </small>
+                
+
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" 
+                class="form-control" 
+                [class.is-invalid]="email.invalid && email.touched"
+                #email="ngModel"
+                name="email" 
+                pattern='^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z0-9\-]+\.)+[a-zA-Z]{2,3}))$'
+                [(ngModel)]="userModel.email"
+                required>
+                <small class="text-danger"
+                [class.d-none]="email.valid || email.untouched">
+                Email is Required
+            </small>
+            </div>
+            <div class="form-group">
+                <label>phone</label>
+                <input type="tel"
+                 class="form-control" 
+                 [class.is-invalid]="phone.invalid && phone.touched"
+                 name="phone" 
+                 #phone="ngModel"
+                 [(ngModel)]="userModel.phone"
+                 pattern="^\d{10}$"
+                 required>
+                 <!-- <small class="text-danger"
+                [class.d-none]="phone.valid || phone.untouched">
+                Phone is Required and Must be 10 Digit
+            </small> -->
+            <div *ngIf="phone.errors && (phone.touched || phone.invalid)">
+                <small class="text-danger"
+                *ngIf="phone.errors.required">
+                Phone Number is Required
+            </small>
+            <small class="text-danger"
+                *ngIf="phone.errors.pattern">
+                Phone Number Must be 10 Digit
+            </small>
+            </div>
+            </div>
+
+<!-- normal validation fails in case of select tag therefore need custom validation -->
+            <div class="form-group">
+                <select class="custom-select" 
+                name="topic" 
+                #topic="ngModel"
+                [class.is-invalid]="topic.invalid && topic.touched"
+                [(ngModel)]="userModel.topic"
+                required>
+                    <option value="" selected>I am Intrested in</option>
+                    <option *ngFor="let topic of topics">{{topic}}</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label>Time Preference</label>
+                <div class="form-check">
+                    <input type="radio" 
+                    class="form-check-input" 
+                    name="timePreference" 
+                    value="Morining"
+                        [(ngModel)]="userModel.timePreference">
+                    <label class="form-check-label">Moring (9AM-12PM)</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" 
+                    class="form-check-input"
+                     name="timePreference"
+                     value="Evening"
+                    [(ngModel)]="userModel.timePreference">
+                    <label class="form-check-label">Evening (5PM-8PM)</label>
+                </div>
+            </div>
+
+
+            <!-- <div ngModelGroup="address">
+                <div class="form-group">
+                    <label>Street</label>
+                    <input type="text" class="form-control" name="street" ngModel>
+                </div>
+                <div class="form-group">
+                    <label>City</label>
+                    <input type="text" class="form-control" name="city" ngModel>
+                </div>
+                <div class="form-group">
+                    <label>State</label>
+                    <input type="text" class="form-control" name="state" ngModel>
+                </div>
+                <div class="form-group">
+                    <label>Postal Code</label>
+                    <input type="text" class="form-control" name="postalcode" ngModel>
+                </div>
+
+            </div> -->
+
+
+
+            <div class="form-group mb-3 pl-3">
+                <input type="checkbox" 
+                class="form-check-input" 
+                name="subscribe" 
+                [(ngModel)]="userModel.subscribe">
+                <label for="" class="form-check-label">Send Me Promotional Offers</label>
+            </div>
+
+            <button [disabled]="testForm.form.invalid" class="btn btn-primary" type="submit">Submit Form</button>
+            <button class="btn btn-secondary  ml-3" type="button" (click)="getdata()">Get Data</button>
+        </form>
+    </div>
+    <div class="col-md-3"></div>
+
+
+
+
+</div>
